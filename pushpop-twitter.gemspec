@@ -12,7 +12,10 @@ Gem::Specification.new do |s|
   s.summary     = "A set of Pushpop capabilities for the Twitter API"
 
   s.add_dependency "pushpop"
-  s.add_dependency "twitter_api"
+  s.add_dependency "twitter"
+
+  s.add_development_dependency "rake"
+  s.add_development_dependency "rspec"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

@@ -1,10 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'pushpop'
+gem 'twitter'
 
 group :development, :test do
   gem 'rake'
   gem 'rspec'
-  gem 'mail'
-  gem 'twilio-ruby'
+  gem 'webmock'
+  gem 'debugger'
 end
