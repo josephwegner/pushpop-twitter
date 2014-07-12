@@ -54,4 +54,22 @@ describe Pushpop::Twitter do
       expect(result.first.id).to eq(449660889793581056)
     end
   end
+
+  describe 'unfavorite' do
+    it 'unfavorites a tweet' do
+      step = Pushpop::Twitter.new do |last_response|
+        unfavorite last_response
+      end
+
+      stub_request(:post, "https://api.twitter.com/1.1/favorites/destroy.json").
+        with(:body => {:id => '449660889793581056'}).
+        to_return(body: File.read("spec/fixtures/status.json"))
+
+      stub_request(:post, "https://api.twitter.com/oauth2/token").
+        with(:body => "grant_type=client_credentials")
+
+      result = step.run(example_tweet)
+      expect(result.first.id).to eq(449660889793581056)
+    end
+  end
 end

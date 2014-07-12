@@ -11,9 +11,15 @@ job do
 end
 
 job do
+
   twitter do
     favorite({ :id_str => '484793990345023489' })
   end
+
+  twitter do
+    unfavorite({ :id_str => '484793990345023489' })
+  end
+
 end
 
 Pushpop.run

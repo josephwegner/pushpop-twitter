@@ -28,6 +28,8 @@ module Pushpop
         @twitter.follow @username
       when 'favorite'
         @twitter.favorite @tweet_id
+      when 'unfavorite'
+        @twitter.unfavorite @tweet_id
       else
         raise 'No command specified!'
       end
@@ -43,6 +45,12 @@ module Pushpop
     # param tweet, tweet-sized JSON
     def favorite(tweet, options={})
       @command = 'favorite'
+      @tweet_id = tweet[:id_str]
+      @options = options
+    end
+
+    def unfavorite(tweet, options={})
+      @command = 'unfavorite'
       @tweet_id = tweet[:id_str]
       @options = options
     end
