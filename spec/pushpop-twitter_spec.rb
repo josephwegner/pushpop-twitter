@@ -34,7 +34,7 @@ describe Pushpop::Twitter do
         to_return(body: File.read("spec/fixtures/dzello.json"))
 
       result = step.run('dzello')
-      expect(result.first["screen_name"]).to eq('dzello')
+      expect(result.first.screen_name).to eq('dzello')
     end
   end
 
