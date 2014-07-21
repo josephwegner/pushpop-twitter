@@ -1,3 +1,10 @@
+PATH
+  remote: .
+  specs:
+    pushpop-twitter (0.1.0)
+      pushpop
+      twitter
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -12,31 +19,29 @@ GEM
     clockwork (0.7.7)
       activesupport
       tzinfo
-    columnize (0.8.9)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
-    debugger (1.6.8)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.5)
-    debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.5)
     diff-lcs (1.2.5)
+    dotenv (0.11.1)
+      dotenv-deployment (~> 0.0.2)
+    dotenv-deployment (0.0.2)
     equalizer (0.0.9)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     http (0.6.1)
       http_parser.rb (~> 0.6.0)
     http_parser.rb (0.6.0)
-    i18n (0.6.9)
+    i18n (0.6.11)
     json (1.8.1)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     minitest (5.4.0)
     multipart-post (2.0.0)
     naught (1.0.0)
-    pushpop (0.1.1)
+    pushpop (0.1.2)
       clockwork
+      dotenv
+      thor
     rake (10.3.2)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
@@ -52,8 +57,9 @@ GEM
     rspec-support (3.0.2)
     safe_yaml (1.0.3)
     simple_oauth (0.2.0)
+    thor (0.19.1)
     thread_safe (0.3.4)
-    twitter (5.9.0)
+    twitter (5.11.0)
       addressable (~> 2.3)
       buftok (~> 0.2.0)
       equalizer (~> 0.0.9)
@@ -74,9 +80,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  debugger
-  pushpop
+  pushpop-twitter!
   rake
   rspec
-  twitter
   webmock

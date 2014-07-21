@@ -11,6 +11,7 @@ module Pushpop
 
     def initialize(*args)
       super
+      @options = {}
       @twitter = ::Twitter::REST::Client.new do |config|
         config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
         config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
@@ -23,35 +24,49 @@ module Pushpop
 
       self.configure(last_response, step_responses)
 
-      case @command
-      when 'follow'
-        @twitter.follow @username
-      when 'favorite'
-        @twitter.favorite @tweet_id
-      when 'unfavorite'
-        @twitter.unfavorite @tweet_id
-      else
-        raise 'No command specified!'
+      begin
+
+        case @command
+        when 'follow'
+          @twitter.follow @users, @options
+        when 'favorite'
+          @twitter.favorite @tweets, @options
+        when 'unfavorite'
+          @twitter.unfavorite @tweets, @options
+        when 'favorites'
+          @twitter.favorites @options
+        else
+          raise 'No command specified!'
+        end
+
+      rescue => e
+        puts "Twitter command #{@command} failed!"
+        puts e.message
       end
 
     end
 
-    def follow(username, options={})
+    def favorites(options={})
+      @command = 'favorites'
+      @options = options
+    end
+
+    def follow(users, options={})
       @command = 'follow'
-      @username = username
+      @users = users
       @options = options
     end
 
     # param tweet, tweet-sized JSON
-    def favorite(tweet, options={})
+    def favorite(tweets, options={})
       @command = 'favorite'
-      @tweet_id = tweet[:id_str]
+      @tweets = tweets
       @options = options
     end
 
-    def unfavorite(tweet, options={})
+    def unfavorite(tweets, options={})
       @command = 'unfavorite'
-      @tweet_id = tweet[:id_str]
+      @tweets = tweets
       @options = options
     end
 
