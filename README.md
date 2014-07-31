@@ -29,15 +29,46 @@ TWITTER_OAUTH_SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 Substitute your values for the X's.
 
-Here's a simple job that follows [@dzello](https://twitter.com/dzello):
+### Examples
+
+Here's a few examples of what you can do:
 
 ``` ruby
+require 'pushpop'
 require 'pushpop-twitter'
 
 job do
 
   twitter do
     follow 'dzello'
+  end
+
+end
+
+job do
+
+  twitter do
+    user 'dzello'
+  end
+
+end
+
+job do
+
+  twitter do
+    favorites
+  end
+
+end
+
+job do
+
+  twitter do
+    favorite(Twitter::Tweet.new(:id => 484793990345023489))
+  end
+
+  twitter do
+    unfavorite(Twitter::Tweet.new(:id => 484793990345023489))
   end
 
 end
