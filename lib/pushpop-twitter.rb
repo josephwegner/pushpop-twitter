@@ -35,6 +35,8 @@ module Pushpop
           @twitter.unfavorite @tweets, @options
         when 'favorites'
           @twitter.favorites @options
+        when 'user'
+          @twitter.user @id_param, @options
         else
           raise 'No command specified!'
         end
@@ -67,6 +69,12 @@ module Pushpop
     def unfavorite(tweets, options={})
       @command = 'unfavorite'
       @tweets = tweets
+      @options = options
+    end
+
+    def user(id_param, options={})
+      @command = 'user'
+      @id_param = id_param
       @options = options
     end
 

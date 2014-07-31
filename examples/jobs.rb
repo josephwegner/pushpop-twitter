@@ -15,11 +15,15 @@ end
 job do
 
   twitter do
-    favorites
+    user 'dzello'
   end
 
-  step do |tweets|
-    puts tweets
+end
+
+job do
+
+  twitter do
+    favorites
   end
 
 end

@@ -90,4 +90,21 @@ describe Pushpop::Twitter do
       expect(result.first.id).to eq(449660889793581056)
     end
   end
+
+  describe 'user' do
+    it 'gets a user' do
+      step = Pushpop::Twitter.new do |last_response|
+        user "dzello"
+      end
+
+      stub_request(:post, "https://api.twitter.com/oauth2/token").
+        with(:body => "grant_type=client_credentials")
+
+      stub_request(:get, "https://api.twitter.com/1.1/users/show.json?screen_name=dzello").
+        to_return(body: File.read("spec/fixtures/user.json"))
+
+      result = step.run
+      expect(result.id).to eq(45297280)
+    end
+  end
 end
