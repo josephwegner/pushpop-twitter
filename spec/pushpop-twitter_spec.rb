@@ -11,11 +11,9 @@ describe Pushpop::Twitter do
   }) }
 
   describe 'follow' do
-    it 'follows a user' do
-      step = Pushpop::Twitter.new do |last_response|
-        follow last_response
-      end
+    step = nil
 
+    before(:each) do
       stub_request(:post, "https://api.twitter.com/oauth2/token").
         with(:body => "grant_type=client_credentials")
 
@@ -32,27 +30,57 @@ describe Pushpop::Twitter do
       stub_request(:post, "https://api.twitter.com/1.1/friendships/create.json").
         with(:body => {:user_id => '45297280'}).
         to_return(body: File.read("spec/fixtures/dzello.json"))
+    end
+
+    it 'follows a user' do
+      step = Pushpop::Twitter.new do |last_response|
+        follow last_response
+      end
 
       result = step.run('dzello')
       expect(result.first.screen_name).to eq('dzello')
     end
+
+    it 'returns the value of the block, if there is one' do
+      step = Pushpop::Twitter.new do |last_response|
+        follow last_response
+
+        'test'
+      end
+
+      result = step.run('dzello')
+      expect(result).to eq('test')
+    end
   end
 
   describe 'favorite' do
-    it 'favorites a tweet' do
-      step = Pushpop::Twitter.new do |last_response|
-        favorite last_response
-      end
-
+    before(:each) do
       stub_request(:post, "https://api.twitter.com/1.1/favorites/create.json").
         with(:body => {:id => '449660889793581056'}).
         to_return(body: File.read("spec/fixtures/status.json"))
 
       stub_request(:post, "https://api.twitter.com/oauth2/token").
         with(:body => "grant_type=client_credentials")
+    end
+
+    it 'favorites a tweet' do
+      step = Pushpop::Twitter.new do |last_response|
+        favorite last_response
+      end
 
       result = step.run(example_tweet)
       expect(result.first.id).to eq(449660889793581056)
+    end
+
+    it 'returns teh value of the block, if there is one' do
+      step = Pushpop::Twitter.new do |last_response|
+        favorite last_response
+
+        'test'
+      end
+
+      result = step.run(example_tweet)
+      expect(result).to eq('test')
     end
   end
 

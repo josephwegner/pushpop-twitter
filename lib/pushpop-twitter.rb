@@ -22,15 +22,25 @@ module Pushpop
 
     def run(last_response=nil, step_responses=nil)
 
-      self.configure(last_response, step_responses)
+      ret = self.configure(last_response, step_responses)
 
       begin
 
         case @command
         when 'follow'
-          @twitter.follow @users, @options
+          resource = @twitter.follow @users, @options
+          if ret.nil?
+            resource
+          else
+            ret
+          end
         when 'favorite'
-          @twitter.favorite @tweets, @options
+          resource = @twitter.favorite @tweets, @options
+          if ret.nil?
+            resource
+          else
+            ret
+          end
         when 'unfavorite'
           @twitter.unfavorite @tweets, @options
         when 'favorites'
@@ -51,12 +61,14 @@ module Pushpop
     def favorites(options={})
       @command = 'favorites'
       @options = options
+      return
     end
 
     def follow(users, options={})
       @command = 'follow'
       @users = users
       @options = options
+      return
     end
 
     # param tweet, tweet-sized JSON
@@ -64,18 +76,21 @@ module Pushpop
       @command = 'favorite'
       @tweets = tweets
       @options = options
+      return
     end
 
     def unfavorite(tweets, options={})
       @command = 'unfavorite'
       @tweets = tweets
       @options = options
+      return
     end
 
     def user(id_param, options={})
       @command = 'user'
       @id_param = id_param
       @options = options
+      return
     end
 
     def configure(last_response=nil, step_responses=nil)
